@@ -2,11 +2,11 @@
   <div class="product">
     <h2 class="title">Our Product</h2>
      <div class="productInfo">
-       <div v-for="(product,index)  in product" :key="index" class="productCard">
+       <div v-for="(product,index)  in getProducts" :key="index" class="productCard">
          <img :src="product.image"/>
          <h3>{{product.name}}</h3>
-         <h4>{{ product.cost}}</h4>
-         <button v-on:click="">Add To Cart</button>
+         <h4>{{ product.price}}</h4>
+         <button v-on:click="addToCart(product)">Add To Cart</button>
        </div>
      </div>
   </div>
@@ -14,17 +14,15 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
-  name: "Product",
-  data:()=>{
-    return{
-    page: "product",
-     
-    }
-    
+  name: "Products",
+  methods: {
+   ...mapActions(['addToCart'])
   },
-  
-  
+  computed: {
+    ...mapGetters(['getProducts'])
+  }
 };
 </script>
 

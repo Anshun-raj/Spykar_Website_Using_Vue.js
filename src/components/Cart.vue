@@ -1,27 +1,31 @@
 <template>
    <div class="cart">
     <h2 class="title">Cart</h2>
-    <div v-for="(product) in cart" :key="index">
+    <div class="cartInfo">
+      <div v-for="(product,index) in getCart.products" :key="index" class="cartList">
         <img :src="product.image"/>
          <h3>{{product.name}}</h3>
-         <h4>{{ product.cost}}</h4>
-         <button v-on:click="removeFromCart(product)">Remove</button>
+         <h4>{{ product.price}}</h4>
+         <button v-on:click="deleteProduct(product.id)">Remove</button>
+    </div>
     </div>
    </div>
-   <div v-if="page === 'cart'">
-      <Cart v-on:removeFromCart="removeFromCart" :cart="cart" />
-    </div>
+   
 </template>
 
 <script>
-   export default{
-      props:["cart"],
-      methods:{
-        removeFromCart(product) {
-        this.$emit("removeFromCart", product);
-      }
-     }
+   import { mapGetters, mapActions } from "vuex";
+export default {
+   name: 'Cart',
+   methods: {
+     ...mapActions(['deleteProduct']),
+     
+   },
+   computed: {
+     ...mapGetters(['getCart']),
+     
    }
+}
 </script>
 
 <style>
@@ -45,7 +49,7 @@
     width: 85%;
     min-height: 90%;
     display: flex;
-    /* flex-direction: row; */
+    flex-direction: row;
     align-items: center;
     justify-content: space-around;
   }
